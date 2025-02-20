@@ -35,6 +35,17 @@ public class UserService {
 		repo.deleteById(id);
 	}
 
+	public User updateUser(User obj){
+		User newObj = repo.findById(obj.getId()).orElseThrow(() -> new RuntimeException("User not found"));
+		updateData(newObj, obj);
+		return repo.save(newObj);
+	}
+
+	private void updateData(User newObj, User obj) {
+		newObj.setName(obj.getName());
+		newObj.setEmail(obj.getEmail());
+	}
+
 	public User fromDTO(UserDTO obJDto){
 		return new User(obJDto.getId(), obJDto.getName(), obJDto.getEmail());
 	}
